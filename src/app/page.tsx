@@ -28,9 +28,26 @@ const features = [
 export default function HomePage() {
   return (
     <Container className="py-5">
-      <div className="text-center mb-5">
-        <h1 className="display-5 fw-bold mb-3">웹훅 서비스</h1>
-        <p className="text-muted fs-5">
+      <div 
+        className="text-center mb-5"
+        style={{
+          background: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)',
+          padding: '3rem 1rem',
+          borderRadius: '1rem',
+          boxShadow: '0 4px 6px rgba(0,0,0,0.05)'
+        }}
+      >
+        <h1 
+          className="display-4 fw-bold mb-3"
+          style={{
+            background: 'linear-gradient(45deg, #343a40, #495057)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent'
+          }}
+        >
+          웹훅 서비스
+        </h1>
+        <p className="text-muted fs-5 mb-0">
           다양한 웹훅 서비스를 이용해보세요
         </p>
       </div>
@@ -39,12 +56,25 @@ export default function HomePage() {
         {features.map((feature) => (
           <Col key={feature.id} xs={12} md={6} lg={4}>
             <Card 
-              className={`h-100 shadow-sm transition-all hover:shadow-md ${
-                !feature.isAvailable ? 'opacity-60' : ''
-              }`}
-              style={{ 
-                borderRadius: '12px',
-                cursor: feature.isAvailable ? 'pointer' : 'default'
+              className="h-100 border-0"
+              style={{
+                transition: 'transform 0.2s, box-shadow 0.2s',
+                cursor: feature.isAvailable ? 'pointer' : 'default',
+                boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+                borderRadius: '1rem',
+                overflow: 'hidden'
+              }}
+              onMouseEnter={(e) => {
+                if (feature.isAvailable) {
+                  e.currentTarget.style.transform = 'translateY(-5px)'
+                  e.currentTarget.style.boxShadow = '0 8px 12px rgba(0,0,0,0.15)'
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (feature.isAvailable) {
+                  e.currentTarget.style.transform = 'translateY(0)'
+                  e.currentTarget.style.boxShadow = '0 4px 6px rgba(0,0,0,0.1)'
+                }
               }}
             >
               <Link 
@@ -54,28 +84,21 @@ export default function HomePage() {
                 <Card.Body className="d-flex flex-column p-4">
                   <div className="d-flex align-items-center mb-3">
                     <div 
-                      className="p-2 rounded-circle me-3"
-                      style={{ 
-                        backgroundColor: '#f8f9fa',
+                      className="rounded-circle me-3 d-flex align-items-center justify-content-center"
+                      style={{
                         width: '48px',
                         height: '48px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center'
+                        background: 'linear-gradient(135deg, #fee2e2 0%, #fecaca 100%)',
+                        boxShadow: '0 2px 4px rgba(0,0,0,0.05)'
                       }}
                     >
                       {feature.icon}
                     </div>
-                    <h3 className="h5 mb-0">{feature.title}</h3>
+                    <h3 className="h5 mb-0 fw-bold">{feature.title}</h3>
                   </div>
-                  <p className="text-muted mb-0">
+                  <p className="text-muted mb-0 fs-6">
                     {feature.description}
                   </p>
-                  {!feature.isAvailable && (
-                    <div className="mt-2">
-                      <span className="badge bg-secondary">개발 중</span>
-                    </div>
-                  )}
                 </Card.Body>
               </Link>
             </Card>

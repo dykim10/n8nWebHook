@@ -4,6 +4,7 @@ import { Container, Form, Button, Card, Row, Col, Alert } from 'react-bootstrap'
 import { useState } from 'react'
 import { BsYoutube, BsSend } from 'react-icons/bs'
 import { toast } from 'react-hot-toast'
+import Image from 'next/image'
 
 interface ResponseData {
   success: boolean;
@@ -136,11 +137,17 @@ export default function YoutubePage() {
                     <div className="mt-3">
                       {response.data.thumbnailUrl && (
                         <div className="mb-3">
-                          <img 
-                            src={response.data.thumbnailUrl} 
-                            alt="Video thumbnail" 
-                            className="img-fluid rounded"
-                            style={{ maxHeight: '200px' }}
+                          <Image 
+                            src={response.data.thumbnailUrl}
+                            alt="Video thumbnail"
+                            width={320}
+                            height={180}
+                            className="rounded"
+                            style={{
+                              maxHeight: '200px',
+                              width: 'auto',
+                              objectFit: 'contain'
+                            }}
                           />
                         </div>
                       )}
