@@ -13,27 +13,14 @@ export default function Home() {
 
     const services = [
         {
-            title: '음성 메모',
-            description: '음성으로 메모를 쉽게 작성하고 관리하세요',
+            title: 'Youtube 영상 요약',
+            description: 'Youtube 영상을 쉽게 요약하세요',
             icon: <BsMicFill className="text-4xl mb-4 text-gray-400" />,
-            path: 'voice-memo',
+            path: 'youtube-summary',
             disabled: true,
-            badge: '준비중',
+            badge: '',
         },
-        {
-            title: '이메일 보내기',
-            description: '손쉽게 이메일을 작성하고 발송하세요',
-            icon: <BsEnvelopeFill className="text-4xl mb-4 text-info" />,
-            path: 'email',
-            disabled: false,
-        },
-        {
-            title: 'AI 에이전트',
-            description: 'LLM 기반 AI 에이전트와 대화하세요',
-            icon: <BsRobot className="text-4xl mb-4 text-success" />,
-            path: 'ai-agent',
-            disabled: false,
-        },
+
     ]
 
     return (
