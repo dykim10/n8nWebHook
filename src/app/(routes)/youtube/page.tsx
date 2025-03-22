@@ -18,7 +18,7 @@ interface ResponseData {
 }
 
 export default function YoutubePage() {
-  const [url, setUrl] = useState('')
+  const [url, setUrl] = useState('https://www.youtube.com/watch?v=ZUwWpNEu8-k')
   const [loading, setLoading] = useState(false)
   const [response, setResponse] = useState<ResponseData | null>(null)
 

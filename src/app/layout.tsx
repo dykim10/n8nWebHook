@@ -1,8 +1,8 @@
 // 서버 컴포넌트로 유지
 import '@/styles/globals.css'
+import 'bootstrap/dist/css/bootstrap.css'
 import { notoSansKr } from '@/config/fonts'
 import { Toaster } from 'react-hot-toast'
-import 'bootstrap/dist/css/bootstrap.min.css'
 
 export const metadata = {
   title: '웹훅 서비스',
