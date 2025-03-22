@@ -1,13 +1,25 @@
 'use client'
 
-import { Container, Form, Button, Card, Row, Col } from 'react-bootstrap'
+import { Container, Form, Button, Card, Row, Col, Alert } from 'react-bootstrap'
 import { useState } from 'react'
 import { BsYoutube, BsSend } from 'react-icons/bs'
 import { toast } from 'react-hot-toast'
 
+interface ResponseData {
+  success: boolean;
+  message: string;
+  data?: {
+    title?: string;
+    thumbnailUrl?: string;
+    duration?: string;
+    // 추후 추가될 수 있는 데이터들
+  };
+}
+
 export default function YoutubePage() {
   const [url, setUrl] = useState('')
   const [loading, setLoading] = useState(false)
+  const [response, setResponse] = useState<ResponseData | null>(null)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -17,6 +29,8 @@ export default function YoutubePage() {
     }
 
     setLoading(true)
+    setResponse(null) // 새로운 요청 시 이전 응답 초기화
+
     try {
       const response = await fetch('/api/youtube', {
         method: 'POST',
@@ -27,6 +41,7 @@ export default function YoutubePage() {
       })
 
       const data = await response.json()
+      setResponse(data)
 
       if (!response.ok) {
         throw new Error(data.message || 'URL 전송에 실패했습니다')
@@ -69,15 +84,7 @@ export default function YoutubePage() {
           </div>
           
           {/* URL 입력 카드 */}
-          <Card 
-            className="shadow-sm" 
-            style={{ 
-              backgroundColor: '#f8f9fa',
-              border: '1px solid #dee2e6',
-              borderRadius: '12px',
-              overflow: 'hidden'
-            }}
-          >
+          <Card className="shadow-sm mb-4">
             <Card.Body className="p-4">
               <Form onSubmit={handleSubmit}>
                 <Form.Group className="mb-4">
@@ -88,12 +95,7 @@ export default function YoutubePage() {
                     onChange={(e) => setUrl(e.target.value)}
                     placeholder="https://www.youtube.com/watch?v=..."
                     required
-                    style={{
-                      borderRadius: '8px',
-                      border: '1px solid #ced4da',
-                      backgroundColor: 'white',
-                      boxShadow: 'inset 0 1px 2px rgba(0,0,0,0.075)'
-                    }}
+                    disabled={loading}
                   />
                 </Form.Group>
                 
@@ -103,10 +105,6 @@ export default function YoutubePage() {
                     type="submit"
                     size="lg"
                     disabled={loading}
-                    style={{
-                      borderRadius: '8px',
-                      boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
-                    }}
                   >
                     {loading ? (
                       <>
@@ -121,6 +119,49 @@ export default function YoutubePage() {
                   </Button>
                 </div>
               </Form>
+            </Card.Body>
+          </Card>
+
+          {/* 응답 결과 영역 - 항상 표시 */}
+          <Card className="shadow-sm">
+            <Card.Body className="p-4">
+              <h4 className="mb-3">처리 결과</h4>
+              {response ? (
+                <>
+                  <Alert variant={response.success ? 'success' : 'danger'}>
+                    {response.message}
+                  </Alert>
+                  
+                  {response.success && response.data && (
+                    <div className="mt-3">
+                      {response.data.thumbnailUrl && (
+                        <div className="mb-3">
+                          <img 
+                            src={response.data.thumbnailUrl} 
+                            alt="Video thumbnail" 
+                            className="img-fluid rounded"
+                            style={{ maxHeight: '200px' }}
+                          />
+                        </div>
+                      )}
+                      {response.data.title && (
+                        <p className="mb-2">
+                          <strong>제목:</strong> {response.data.title}
+                        </p>
+                      )}
+                      {response.data.duration && (
+                        <p className="mb-0">
+                          <strong>재생 시간:</strong> {response.data.duration}
+                        </p>
+                      )}
+                    </div>
+                  )}
+                </>
+              ) : (
+                <div className="text-center text-muted py-4">
+                  <p className="mb-0">URL을 전송하면 결과가 여기에 표시됩니다</p>
+                </div>
+              )}
             </Card.Body>
           </Card>
         </Col>
