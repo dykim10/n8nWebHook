@@ -2,7 +2,8 @@
 
 import { useRouter } from 'next/navigation'
 import { Container, Row, Col, Card, Badge } from 'react-bootstrap'
-import { BsMicFill, BsEnvelopeFill, BsRobot } from 'react-icons/bs'
+/*import { BsMicFill, BsEnvelopeFill, BsRobot } from 'react-icons/bs'*/
+import { BsMicFill } from 'react-icons/bs'
 
 export default function Home() {
     const router = useRouter()
