@@ -7,6 +7,7 @@ export async function POST(request: Request) {
     // 1. 웹훅 URL 검증
     if (!WEBHOOK_URL) {
       console.error('Webhook URL is not defined')
+      console.log("WEBHOOK_URL => " + WEBHOOK_URL);
       return NextResponse.json({
         success: false,
         message: '서버 설정 오류'
@@ -22,8 +23,8 @@ export async function POST(request: Request) {
       }, { status: 400 })
     }
 
-    // console.log("WEBHOOK_URL => " + WEBHOOK_URL);
-    // console.log("url => " + url);
+    console.log("WEBHOOK_URL => " + WEBHOOK_URL);
+    console.log("url => " + url);
     // 3. n8n 웹훅으로 데이터 전송
     const response = await fetch(WEBHOOK_URL, {
       method: 'POST',
