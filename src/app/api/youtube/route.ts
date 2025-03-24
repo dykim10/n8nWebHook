@@ -1,6 +1,10 @@
 import { NextResponse } from 'next/server'
 
-const WEBHOOK_URL = process.env.N8N_YOUTUBE_WEBHOOK_TEST_URL
+let WEBHOOK_URL = process.env.N8N_YOUTUBE_WEBHOOK_TEST_URL
+const NODE_ENV = process.env.NODE_ENV
+if(NODE_ENV === 'production'){
+  WEBHOOK_URL = process.env.N8N_YOUTUBE_WEBHOOK_LIVE_URL
+}
 
 export async function POST(request: Request) {
   try {
