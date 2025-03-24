@@ -1,24 +1,10 @@
 import { NextResponse } from 'next/server'
-
-let WEBHOOK_URL = process.env.N8N_YOUTUBE_WEBHOOK_TEST_URL
-const NODE_ENV = process.env.NODE_ENV
-if(NODE_ENV === 'production'){
-  WEBHOOK_URL = process.env.N8N_YOUTUBE_WEBHOOK_LIVE_URL
-}
+import { getWebhookUrl } from '@/config/api'
 
 export async function POST(request: Request) {
   try {
-    // 1. 웹훅 URL 검증
-    if (!WEBHOOK_URL) {
-      console.error('Webhook URL is not defined')
-      console.log("WEBHOOK_URL => " + WEBHOOK_URL);
-      return NextResponse.json({
-        success: false,
-        message: '서버 설정 오류'
-      }, { status: 500 })
-    }
-
-    // 2. 요청 데이터 검증
+    const webhookUrl = getWebhookUrl('youtube');
+    
     const { url } = await request.json()
     if (!url) {
       return NextResponse.json({
@@ -27,10 +13,10 @@ export async function POST(request: Request) {
       }, { status: 400 })
     }
 
-    console.log("WEBHOOK_URL => " + WEBHOOK_URL);
-    console.log("url => " + url);
-    // 3. n8n 웹훅으로 데이터 전송
-    const response = await fetch(WEBHOOK_URL, {
+    console.log('webhookUrl', webhookUrl)
+    console.log('request', request)
+    
+    const response = await fetch(webhookUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
