@@ -34,6 +34,9 @@ export async function POST(request: Request) {
       body: JSON.stringify({ url }),
     })
 
+    // n8n 웹훅으로부터 받은 데이터
+    const webhookData = await response.json()
+
     // 4. 웹훅 응답 처리
     if (!response.ok) {
       return NextResponse.json({
@@ -42,10 +45,14 @@ export async function POST(request: Request) {
       }, { status: response.status })
     }
 
-    // 5. 성공 응답
+    // 5. 성공 응답에 웹훅 데이터 포함
     return NextResponse.json({
       success: true,
-      message: 'URL이 성공적으로 전송되었습니다'
+      message: 'URL이 성공적으로 전송되었습니다',
+      data: {
+        youtubeId: webhookData.youtubeId,
+        transcript: webhookData.transcript
+      }
     }, { status: 200 })
 
   } catch (error) {
