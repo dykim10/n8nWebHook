@@ -14,8 +14,7 @@ export async function POST(request: Request) {
     }
 
     console.log('webhookUrl', webhookUrl)
-    console.log('request', request)
-    
+    //console.log('request', request)
     const response = await fetch(webhookUrl, {
       method: 'POST',
       headers: {
