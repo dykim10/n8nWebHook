@@ -14,11 +14,16 @@ interface ResponseData {
     thumbnailUrl?: string;
     duration?: string;
     // 추후 추가될 수 있는 데이터들
+
+  };
+  returnData?: {
+    youtubeId?: string;
+    resultText?: string;
   };
 }
 
 export default function YoutubePage() {
-  const [url, setUrl] = useState('https://www.youtube.com/watch?v=ZUwWpNEu8-k')
+  const [url, setUrl] = useState('https://youtu.be/uRsEU0Nc7NQ?si=4ASbjsMI6yBpe-Sp')
   const [loading, setLoading] = useState(false)
   const [response, setResponse] = useState<ResponseData | null>(null)
 
@@ -47,9 +52,12 @@ export default function YoutubePage() {
       if (!response.ok) {
         throw new Error(data.message || 'URL 전송에 실패했습니다')
       }
+      console.log('data', data);
+      console.log('data.returnData => ', data.returnData.resultText);
 
       toast.success(data.message)
       setUrl('')
+
     } catch (error) {
       toast.error('URL 전송에 실패했습니다')
       console.error('URL 전송 오류:', error)
@@ -80,7 +88,7 @@ export default function YoutubePage() {
             </div>
             <h1 className="display-5 fw-bold mb-3">YouTube URL 전송</h1>
             <p className="text-muted fs-5 mb-5">
-              YouTube URL을 입력하여 전송하세요
+              YouTube URL을 입력하면, 해당 유튜브 내용이 요약 됩니다. 
             </p>
           </div>
           
@@ -104,7 +112,7 @@ export default function YoutubePage() {
                   <Button
                     variant="danger"
                     type="submit"
-                    size="lg"
+                    size="sm"
                     disabled={loading}
                   >
                     {loading ? (
@@ -132,6 +140,17 @@ export default function YoutubePage() {
                   <Alert variant={response.success ? 'success' : 'danger'}>
                     {response.message}
                   </Alert>
+
+                  {response.returnData && response.returnData.resultText && (
+                    <Card className="mt-3">
+                      <Card.Header className="bg-primary text-white">
+                        <h5 className="mb-0">요약</h5>
+                      </Card.Header>
+                      <Card.Body>
+                        <p className="mb-0">{response.returnData.resultText}</p>
+                      </Card.Body>
+                    </Card>
+                  )}
                   
                   {response.success && response.data && (
                     <div className="mt-3">

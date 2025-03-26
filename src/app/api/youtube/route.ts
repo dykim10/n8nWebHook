@@ -34,13 +34,14 @@ export async function POST(request: Request) {
       }, { status: response.status })
     }
 
+    console.log('webhookData', webhookData);
     // 5. 성공 응답에 웹훅 데이터 포함
     return NextResponse.json({
       success: true,
       message: 'URL이 성공적으로 전송되었습니다',
-      data: {
-        youtubeId: webhookData.youtubeId,
-        transcript: webhookData.transcript
+      returnData : {
+        youtubeId: webhookData[0].youtubeId,
+        resultText: webhookData[0].response.output_text
       }
     }, { status: 200 })
 
