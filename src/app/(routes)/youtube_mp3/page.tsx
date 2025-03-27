@@ -4,7 +4,6 @@ import { Container, Form, Button, Card, Row, Col, Alert } from 'react-bootstrap'
 import { useState } from 'react'
 import { BsYoutube, BsSend } from 'react-icons/bs'
 import { toast } from 'react-hot-toast'
-import Image from 'next/image'
 
 interface ResponseData {
   success: boolean;
