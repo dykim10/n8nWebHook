@@ -4,8 +4,10 @@ export const API_ENDPOINTS = {
     baseUrl: 'https://funky-correct-mammal.ngrok-free.app',
     youtube: {
       webhooks: {
-        test: 'webhook-test/7487481e-5d18-4c82-b0f3-796f3a580dbd',
-        live: 'webhook/7487481e-5d18-4c82-b0f3-796f3a580dbd'
+        // test: 'webhook-test/7487481e-5d18-4c82-b0f3-796f3a580dbd',
+        // live: 'webhook/7487481e-5d18-4c82-b0f3-796f3a580dbd'
+        test: 'webhook-test/d5b8d0c5-575b-4769-82b1-9ad38159382d',
+        live: 'webhook/d5b8d0c5-575b-4769-82b1-9ad38159382d'
       }
     }
   }

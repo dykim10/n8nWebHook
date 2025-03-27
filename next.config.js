@@ -14,7 +14,7 @@ const nextConfig = {
         }
         config.resolve.alias = {
             ...config.resolve.alias,
-            '@': path.resolve(__dirname), // 👈 추가
+            '@': path.resolve(__dirname, 'src'),
             '@fonts': path.join(__dirname, 'fonts'),
             '@config': path.join(__dirname, 'config'),
         }

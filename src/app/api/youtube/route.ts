@@ -41,7 +41,7 @@ export async function POST(request: Request) {
       message: 'URL이 성공적으로 전송되었습니다',
       returnData : {
         youtubeId: webhookData[0].youtubeId,
-        resultText: webhookData[0].response.output_text
+        resultText: webhookData[0].response.text
       }
     }, { status: 200 })
 
