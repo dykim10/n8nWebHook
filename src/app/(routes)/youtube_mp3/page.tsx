@@ -95,11 +95,10 @@ export default function YoutubePage() {
               </div>
             </div>
             <h1 className="display-5 fw-bold mb-3">YouTube URL 전송</h1>
-            <p className="text-muted fs-5 mb-5">
-              YouTube URL을 입력하면, 
-              <span className="fw-bold text-primary">AI</span>를 활용하여 자동으로 유튜브 내의 음성을 추출<br/>
-              해당 내용을 <span className="fst-italic">markdown 형식 요약</span> 및 <span className="fst-italic">주요 tags</span>를 추출하고, <br/>
-              최종적으로 <span className="fw-bold">html 형태의 문서</span>를 생성합니다.
+            <p className="text-muted fs-6 mb-5">
+              YouTube URL을 입력하면, <span className="fw-bold text-primary text-decoration-underline">AI</span> 활용, 
+              YouTube 영상 내의 음성을 추출하여<br></br>
+              그 내용을 html과 tags로 구분하여 <span className="text-decoration-underline">미리보기</span>를 제공합니다. 
             </p>
           </div>
           
