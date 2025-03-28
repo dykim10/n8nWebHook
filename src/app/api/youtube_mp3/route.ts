@@ -42,8 +42,7 @@ export async function POST(request: Request) {
       message: 'URL이 성공적으로 전송되었습니다',
       returnData : {
         // 여기서 웹페이지를 만들어서 전송하고자 합니다.
-        htmlContent: webhookData[0].output.html,
-        tags: webhookData[0].output.tags,
+        htmlContent: webhookData[0].output.html
       }
     }, { status: 200 })
 

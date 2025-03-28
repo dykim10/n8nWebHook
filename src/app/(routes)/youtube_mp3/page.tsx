@@ -2,7 +2,7 @@
 
 import { Container, Form, Button, Card, Row, Col, Alert } from 'react-bootstrap'
 import { useState } from 'react'
-import { BsYoutube, BsSend } from 'react-icons/bs'
+import { BsYoutube, BsSend, BsDownload } from 'react-icons/bs'
 import { toast } from 'react-hot-toast'
 
 interface ResponseData {
@@ -10,13 +10,13 @@ interface ResponseData {
   message: string;
   returnData?: {
     htmlContent?: string;
-    tags?: string[];
   };
 }
 
 export default function YoutubePage() {
   //const [url, setUrl] = useState('https://www.youtube.com/watch?v=IdMK0kQVMAc')
-  const [url, setUrl] = useState('https://www.youtube.com/watch?v=zMSCLeOJxro')
+  //const [url, setUrl] = useState('https://www.youtube.com/watch?v=zMSCLeOJxro')
+  const [url, setUrl] = useState('https://www.youtube.com/watch?v=g2EuEdKsZjo')
   const [loading, setLoading] = useState(false)
   const [response, setResponse] = useState<ResponseData | null>(null)
 
@@ -40,8 +40,6 @@ export default function YoutubePage() {
       })
 
       const data = await response.json()
-      // tags 문자열을 배열로 변환
-      const tagsArray = data.returnData.tags?.split(',').map((tag: string) => tag.trim()) || []
 
       console.log('data', data);
       console.log('data.output => ', data.returnData);
@@ -52,8 +50,7 @@ export default function YoutubePage() {
         success: data.success,           // API 성공 여부
         message: data.message,           // API 메시지
         returnData: {                    // returnData 객체
-          htmlContent: data.returnData.htmlContent,  // HTML 내용
-          tags: tagsArray                 // 태그 배열
+          htmlContent: data.returnData.htmlContent  // HTML 내용
         }
       })
 
@@ -73,6 +70,21 @@ export default function YoutubePage() {
       setLoading(false)
     }
   }
+
+  const handleDownload = () => {
+    if (!response?.returnData?.htmlContent) return;
+    
+    const htmlContent = response.returnData.htmlContent;
+    const blob = new Blob([htmlContent], { type: 'text/html' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'generated-document.html';
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(url);
+    document.body.removeChild(a);
+  };
 
   return (
     <Container fluid className="py-5 bg-white">
@@ -151,36 +163,25 @@ export default function YoutubePage() {
                     {response.message}
                   </Alert>
 
-                  {response.returnData && response.returnData.tags && (
-                    <Card className="mt-3">
-                      <Card.Header className="bg-info text-white">
-                        <h5 className="mb-0">태그</h5>
-                      </Card.Header>
-                      <Card.Body>
-                        <div className="d-flex flex-wrap gap-2">
-                          {response.returnData.tags.map((tag, index) => (
-                            <span 
-                              key={index}
-                              className="badge bg-primary"
-                            >
-                              {tag}
-                            </span>
-                          ))}
-                        </div>
-                      </Card.Body>
-                    </Card>
-                  )}
-
                   {response.returnData && response.returnData.htmlContent && (
                     <Card className="mt-3">
-                      <Card.Header className="bg-success text-white">
+                      <Card.Header className="bg-success text-white d-flex justify-content-between align-items-center">
                         <h5 className="mb-0">웹페이지 미리보기</h5>
+                        <Button 
+                          variant="light" 
+                          size="sm"
+                          onClick={handleDownload}
+                          className="d-flex align-items-center"
+                        >
+                          <BsDownload className="me-2" />
+                          다운로드
+                        </Button>
                       </Card.Header>
                       <Card.Body>
                         <div 
                           className="border rounded p-3"
                           style={{ 
-                            maxHeight: '500px', 
+                            maxHeight: '1000px', 
                             overflowY: 'auto',
                             backgroundColor: '#f8f9fa'
                           }}
