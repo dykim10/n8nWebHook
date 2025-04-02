@@ -16,8 +16,8 @@ const features = [
   },
   {
     id: 'youtube_mp3',
-    title: 'YouTube MP3 추출',
-    description: 'YouTube URL을 MP3로 추출하여 웹페이지로 제작하고자 합니다.',
+    title: 'YouTube 정보 추출',
+    description: 'YouTube URL로 정보를 추출하여 웹페이지로 제작하고자 합니다.',
     icon: <BsYoutube className="text-danger" size={24} />,
     path: '/youtube_mp3',
     isAvailable: true
